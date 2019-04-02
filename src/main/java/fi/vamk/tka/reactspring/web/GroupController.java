@@ -26,6 +26,12 @@ class GroupController {
         this.groupRepository = groupRepository;
     }
 
+    @GetMapping("/test")
+    public String sayHello(){
+        return "Hello Vaasa";
+    }
+
+
     @GetMapping("/groups")
     Collection<Group> groups() {
         return groupRepository.findAll();
