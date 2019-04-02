@@ -1,4 +1,6 @@
 # React Spring example
+Should run in travis too
+
 Origin: https://developer.okta.com/blog/2018/07/19/simple-crud-react-and-spring-boot
 
 This is an example project where group, event and user data is stored to database (H2 is a memory based DB) and requestred initially using a REST client and in branch React with a React Web -client.
