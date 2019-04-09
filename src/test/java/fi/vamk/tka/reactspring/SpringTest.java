@@ -1,40 +1,44 @@
 package fi.vamk.tka.reactspring;
 
+import static org.junit.Assert.assertEquals;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringRunner;
 
 import fi.vamk.tka.reactspring.model.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.test.context.junit4.SpringRunner;
+
 @RunWith(SpringRunner.class)
 @SpringBootTest
-@Configuration
-@ComponentScan(basePackages = {"fi.vamk.tka.reactspring"}) // are you sure you wanna scan all the packages?
-
-
-
-@EnableJpaRepositories(basePackageClasses = UserRepository.class) // assuming you have all the spring data repo in the same package.
+@EnableJpaRepositories(basePackageClasses = GroupRepository.class)
 public class SpringTest{
     @Autowired
-    
-    private UserRepository repository;
+    private GroupRepository repository;
+    @Test
+    public void addingGroupTest(){
+        //luodaan tyhjä group olio
+        Group item = new Group();
+        //laitetaan sille nimeksi jotain
+        Group item2 = item;
+        item2.setName("Vaasa JUG");
+        // tallennetaan se kantaan
+        repository.save(item2);
+        // katsotaan löytyykö kannasta tuo tallennettu
+        // laitetaan se uuteen olioon
+        Group found = repository.findByName(item2.getName());
+        // then
+        // sitten verrataan onko kannasta haettu sama kuin sinne laitettu
+        assertEquals(found.getName(), item2.getName());
+		//remove the data from persistant database
+		repository.delete(found);
+        
+    }
     
     @Test
-    public void addingUserTest(){
-        
-        
-        User item = new User();
-        item.setName("Tuomas");
-        
-        
-        repository.save(item);
-        
-        
-
+    public void helloYouTest(){
+        System.out.println("Onko kesä koittanut");
     }
 }
